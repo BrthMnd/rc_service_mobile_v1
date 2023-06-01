@@ -13,6 +13,43 @@ class ConfiguracionPage extends StatefulWidget {
 class _ConfiguracionPageState extends State<ConfiguracionPage> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("COnfig"),);
+    return Drawer(
+
+      child: ListView(
+        children: [
+          perfilContainer(),
+          
+          ListTile( leading: perfilRedirectContainer(),
+          onTap: ()=>{},),
+          ListTile( leading: configuracionRedirectContainer(),
+          onTap: ()=>{},),
+          ListTile( leading: ayudaRedirectContainer(),
+          onTap: ()=>{},),
+          ListTile( leading: temaOscuro(),
+          onTap: ()=>{},),
+    
+    
+    
+        ],
+      ),
+    );
   }
 }
+
+Widget perfilContainer(){
+  return const Icon(Icons.account_circle_outlined, size: 300, color: Color.fromARGB(255, 90, 90, 90),);
+}
+Widget perfilRedirectContainer(){
+  return const Text("Perfil", style: TextStyle(fontSize: 20),);
+   
+}
+Widget configuracionRedirectContainer(){
+  return const Text("Configuracion", style: TextStyle(fontSize: 20));
+}
+Widget ayudaRedirectContainer(){
+  return const Text("Ayuda", style: TextStyle(fontSize: 20));
+}
+Widget temaOscuro(){
+  return const Text("Activar Oscuro/Claro", style: TextStyle(fontSize: 20));
+}
+

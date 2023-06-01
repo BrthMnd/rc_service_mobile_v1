@@ -75,11 +75,15 @@ Widget cartaContainer() {
 }
 
 
+Widget btnContainer() {
+  return ElevatedButton(onPressed: ()=>{}, child:  Text("Aplicar"));
+}
+
 
 Widget tituloContainer() {
   return Container(
-    margin: const EdgeInsets.only(top: 50),
-    child: const Text("Oferta", 
+    margin: const EdgeInsets.only(top: 80),
+    child: const Text("Ofertas", 
     style: TextStyle(fontSize: 40),));
 }
 
@@ -96,9 +100,4 @@ Widget buscadorContainer() {
       ),
     ),
     );
-}
-
-
-Widget btnContainer() {
-  return ElevatedButton(onPressed: ()=>{}, child:  Text("Aplicar"));
 }

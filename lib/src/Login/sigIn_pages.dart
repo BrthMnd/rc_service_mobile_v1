@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './login_pages.dart';
-
+import './registro/Registro_datos.dart';
 // ignore: use_key_in_widget_constructors
 class RegistrarUsuario extends StatefulWidget {
   static String id = "RegistrarUsuario";
@@ -14,34 +14,26 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        
-        children: [Container(
-          height: 900,
+          resizeToAvoidBottomInset: false,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+          
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/back.jpg"), fit: BoxFit.cover)),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                bienvenidos(),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Column(children: [inputsFields(),spaces(), inputsPassword(),spaces(),inputsPassword(),spaces(), btnEnviar(context),spaces(),]),
-                ),
-              ]),
-        ),]
-      ),
-    ));
+          child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  bienvenidos(),
+                  Column(children: [inputsFields(),spaces(), inputsPassword(),spaces(),inputsPassword(),spaces(), btnEnviar(context),spaces(),]),
+                ]),
+    )));
   }
 }
 
 Widget bienvenidos() {
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    margin: const EdgeInsets.only(bottom: 20),
     padding: const EdgeInsets.symmetric(vertical: 20),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
@@ -81,7 +73,7 @@ Widget inputsPassword() {
 
 Widget spaces() {
   return Container(
-    margin: EdgeInsets.all(20),
+    margin: EdgeInsets.all(10),
   );
 }
 
@@ -89,7 +81,7 @@ Widget btnEnviar(context){
   return ElevatedButton(
             onPressed: () {
               print('Botón presionado');
-              Navigator.pushNamed(context, LoginPage.id);
+              Navigator.pushNamed(context, DatosDeUsuario.id);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 92, 255, 206), // Color de fondo del botón

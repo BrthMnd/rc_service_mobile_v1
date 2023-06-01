@@ -12,7 +12,7 @@ class BtnnNavigationApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BtnnNavigation();
+    return BtnnNavigation();
   }
 }
 
@@ -29,7 +29,7 @@ class _BtnnNavigationState
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     paginaHome(),
-    EstadosPage(),
+    EstadoPage(),
     ConfiguracionPage(),
   ];
 
