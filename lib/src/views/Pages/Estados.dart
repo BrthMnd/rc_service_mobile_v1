@@ -84,7 +84,7 @@ Widget btnContainer() {
 Widget tituloContainer() {
   return Container(
     margin: const EdgeInsets.only(top: 80),
-    child: const Text("Estados", 
+    child: const Text("Contratacion", 
     style: TextStyle(fontSize: 40),));
 }
 

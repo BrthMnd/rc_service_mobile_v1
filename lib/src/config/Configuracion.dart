@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_prueba/src/views/Perfil/PerfilPage.dart';
 
 void main() => runApp(const ConfiguracionPage());
 
@@ -20,9 +21,14 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
           perfilContainer(),
           
           ListTile( leading: perfilRedirectContainer(),
-          onTap: ()=>{},),
+          onTap: ()=>{
+            Navigator.pushNamed(context, PerfilPage.id)
+
+          },),
           ListTile( leading: configuracionRedirectContainer(),
-          onTap: ()=>{},),
+          onTap: ()=>{
+
+          },),
           ListTile( leading: ayudaRedirectContainer(),
           onTap: ()=>{},),
           ListTile( leading: temaOscuro(),
@@ -52,4 +58,3 @@ Widget ayudaRedirectContainer(){
 Widget temaOscuro(){
   return const Text("Activar Oscuro/Claro", style: TextStyle(fontSize: 20));
 }
-

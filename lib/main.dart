@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_prueba/src/Login/registro/Registro_datos.dart';
 import 'package:login_prueba/src/config/Configuracion.dart';
+import 'package:login_prueba/src/views/Perfil/PerfilPage.dart';
 import './src/Login/login_pages.dart';
 import './src/Login/sigIn_pages.dart';
 import './src/views/navbar.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         BtnnNavigationApp.id: (context) => const BtnnNavigationApp(),
         ConfiguracionPage.id: (context) => const ConfiguracionPage(),
         DatosDeUsuario.id: (context) =>  DatosDeUsuario(),
+        PerfilPage.id: (context) => const PerfilPage(),
       }
     );
   }

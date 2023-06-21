@@ -59,7 +59,7 @@ Widget menuBar(selectedIndex, onItemTapped) {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.assignment),
-        label: 'Estados',
+        label: 'Contratacion',
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.settings),
