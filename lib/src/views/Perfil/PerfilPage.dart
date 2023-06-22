@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../Api/UsuarioApi.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 void main() => runApp(const PerfilPage());
 
 class PerfilPage extends StatefulWidget {
@@ -11,12 +13,15 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
-  Future <List<dynamic>> users = UsuarioApi();
-   @override
-   void initState() {
-     super.initState();
-     
-   }
+  List<dynamic> users = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    UsuarioApi();
+  }
+ 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,50 +34,71 @@ class _PerfilPageState extends State<PerfilPage> {
               perfilImage(),
               Expanded(
                   child: Drawer(
-                    child: ListView(
-                                  children: [
+                child: ListView(
+                  children: [
                     ListTile(
-                      title: Text("Nombre y Apellido: "),
+                      title: Text("Nombre y Apellido: "+ users[0]['nombre'].toString() + " "+users[0]['apellido'].toString()),
                     ),
                     ListTile(
-                      title: Text("Fecha de Registro: "),
+                      title: Text("Fecha de Registro: "+ users[0]['fechaRegistro'].toString()),
                     ),
                     ListTile(
-                      title: Text("Direcion: "),
+                      title: Text("Direcion: "+ users[0]['direccion'].toString()),
                     ),
                     ListTile(
-                      title: Text("Documento de identidad: "),
+                      title: Text("Documento de identidad: "+ users[0]['NumeroIdentificacionPersonal'].toString()),
                     ),
                     ListTile(
-                      title: Text("Telefono: "),
+                      title: Text("Telefono: "+ users[0]['telefono'].toString()),
                     ),
                     ListTile(
-                      title: Text("Email: "),
+                      title: Text("Email: "+ users[0]['email'].toString()),
                     ),
                     ListTile(
                       leading: Icon(Icons.save_rounded),
-                      title: Text("Hoja de vida "),
-                      onTap: (){},
+                      title: Text("Hoja de vida: PDF"),
+                      onTap: () {},
                     ),
-                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(onPressed: (){}, child: Text("Editar"))
+                        ElevatedButton(onPressed: () {}, child: Text("Editar"))
                       ],
                     )
-
-                  
-                                  ],
-                                ),
-                  )),
+                  ],
+                ),
+              )),
             ],
           ),
         ),
       ),
     );
   }
-  
+   
+
+  void UsuarioApi() async {
+    final url = Uri.parse(
+        'https://api-flutter-proyectrcservice.onrender.com/usuario/5');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = response.body;
+        // print(data);
+        final res = jsonDecode(data);
+        print(res);
+        setState(() {
+          users = res;
+        });
+      } else {
+        print('Error de solicitud: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Error en la conexión
+      print('Error de conexión: $e');
+    }
+  }
 }
 
 Widget perfilImage() {
