@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import '../../Api/UsuarioApi.dart';
 void main() => runApp(const PerfilPage());
 
 class PerfilPage extends StatefulWidget {
@@ -14,13 +14,30 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
   List<dynamic> users = [];
+  bool isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    UsuarioApi();
+    LoadingApiUser();
   }
- 
+  void LoadingApiUser(){
+    setState(() {
+      isLoading = true;
+    });
+    UsuarioApi((res){
+        print(res);
+      setState((){
+        users = res;
+        isLoading = false;
+        
+      });
+
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +51,11 @@ class _PerfilPageState extends State<PerfilPage> {
               perfilImage(),
               Expanded(
                   child: Drawer(
-                child: ListView(
+                child: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          :users.isNotEmpty ?  ListView(
                   children: [
                     ListTile(
                       title: Text("Nombre y Apellido: "+ users[0]['nombre'].toString() + " "+users[0]['apellido'].toString()),
@@ -66,8 +87,12 @@ class _PerfilPageState extends State<PerfilPage> {
                       ],
                     )
                   ],
+                ): Center(
+                  child: Text('No hay usuarios disponibles.'),
                 ),
-              )),
+              )
+              )
+              ,
             ],
           ),
         ),
@@ -76,29 +101,29 @@ class _PerfilPageState extends State<PerfilPage> {
   }
    
 
-  void UsuarioApi() async {
-    final url = Uri.parse(
-        'https://api-flutter-proyectrcservice.onrender.com/usuario/5');
+  // void UsuarioApi() async {
+  //   final url = Uri.parse(
+  //       'https://api-flutter-proyectrcservice.onrender.com/usuario/5');
 
-    try {
-      final response = await http.get(url);
+  //   try {
+  //     final response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        final data = response.body;
-        // print(data);
-        final res = jsonDecode(data);
-        print(res);
-        setState(() {
-          users = res;
-        });
-      } else {
-        print('Error de solicitud: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Error en la conexión
-      print('Error de conexión: $e');
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       final data = response.body;
+  //       // print(data);
+  //       final res = jsonDecode(data);
+  //       print(res);
+  //       setState(() {
+  //         users = res;
+  //       });
+  //     } else {
+  //       print('Error de solicitud: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     // Error en la conexión
+  //     print('Error de conexión: $e');
+  //   }
+  // }
 }
 
 Widget perfilImage() {
