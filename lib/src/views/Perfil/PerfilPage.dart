@@ -100,30 +100,6 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
    
-
-  // void UsuarioApi() async {
-  //   final url = Uri.parse(
-  //       'https://api-flutter-proyectrcservice.onrender.com/usuario/5');
-
-  //   try {
-  //     final response = await http.get(url);
-
-  //     if (response.statusCode == 200) {
-  //       final data = response.body;
-  //       // print(data);
-  //       final res = jsonDecode(data);
-  //       print(res);
-  //       setState(() {
-  //         users = res;
-  //       });
-  //     } else {
-  //       print('Error de solicitud: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // Error en la conexión
-  //     print('Error de conexión: $e');
-  //   }
-  // }
 }
 
 Widget perfilImage() {
