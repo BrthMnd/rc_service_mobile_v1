@@ -1,3 +1,5 @@
+import 'package:login_prueba/src/views/navbar.dart';
+
 import '../../Api/OfertasApi.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,7 @@ void main() => runApp(const paginaHome());
 
 // ignore: camel_case_types
 class paginaHome extends StatefulWidget {
+  static String id = "pagina-home";
   const paginaHome({super.key});
 
   @override
@@ -36,38 +39,46 @@ class _paginaHomeState extends State<paginaHome> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-      children: [
-        tituloContainer(),
-        buscadorContainer(),
-        isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : _ofertas.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _ofertas.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final oferta = _ofertas[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        child: SizedBox(height: 150, child: cartaContainer(oferta)),
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text('No hay ofertas disponibles.'),
-                  ),
-      ],
-    ));
+    return Scaffold(
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          tituloContainer(),
+          buscadorContainer(),
+          isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : _ofertas.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _ofertas.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final oferta = _ofertas[index];
+                        if (oferta["OfertaEstado"] == "Disponible") {
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: SizedBox(
+                                height: 150,
+                                child: cartaContainer(oferta, context)),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    )
+                  : Center(
+                      child: Text('No hay ofertas disponibles.'),
+                    ),
+        ],
+      )),
+    );
   }
 }
 
-Widget cartaContainer(dynamic oferta) {
+Widget cartaContainer(dynamic oferta, context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
@@ -77,7 +88,28 @@ Widget cartaContainer(dynamic oferta) {
           // Inmueble
           Text("Inmueble:"),
           Text(oferta["inmueble"].toString()),
-          Text("Mas Info"),
+          GestureDetector(
+            onTap: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title:  Text(oferta["inmueble"].toString().toUpperCase()),
+          content: Text(oferta["descripcion"].toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+            child: Text(
+              "Mas Info",
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.blue,
+              ),
+            ),
+          ),
         ],
       ),
       Row(
@@ -92,18 +124,22 @@ Widget cartaContainer(dynamic oferta) {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          // Inmueble
           Text("Estado:"),
           Text(oferta["OfertaEstado"].toString()),
-          btnContainer(),
+          btnContainer(oferta["id"], context, oferta),
         ],
       ),
     ],
   );
 }
 
-Widget btnContainer() {
-  return ElevatedButton(onPressed: () => {}, child: Text("Aplicar"));
+Widget btnContainer(ofertaId, context, oferta) {
+  return ElevatedButton(
+      onPressed: () => {
+            actualizarOfertaEstado(ofertaId, "Aplicando", oferta),
+            Navigator.pushReplacementNamed(context, BtnnNavigationApp.id)
+          },
+      child: Text("Aplicar"));
 }
 
 Widget tituloContainer() {
