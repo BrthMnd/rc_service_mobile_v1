@@ -151,15 +151,22 @@ class _LoginPageState extends State<LoginPage> {
 
       // Verificar si se encontró un usuario con el nombre de usuario proporcionado
       if (userData.isNotEmpty) {
-        var user = userData[0];
-        String apiUsername = user['nombre'];
-        String apiPassword = user['apellido'];
+        bool isUserFound = false;
 
-        // Verificar si los detalles coinciden
-        if (apiUsername == username && apiPassword == password) {
-          // Inicio de sesión exitoso, redirigir a la siguiente pantalla
-          Navigator.pushNamed(context, BtnnNavigationApp.id);
-        } else {
+        // Recorrer la información de los usuarios
+        userData.forEach((user) {
+          String apiUsername = user['nombre'];
+          String apiPassword = user['apellido'];
+
+          // Verificar si los detalles coinciden
+          if (apiUsername == username && apiPassword == password) {
+            // Inicio de sesión exitoso, redirigir a la siguiente pantalla
+            Navigator.pushNamed(context, BtnnNavigationApp.id);
+            isUserFound = true;
+          }
+        });
+
+        if (!isUserFound) {
           // Mostrar un diálogo de error de inicio de sesión
           showDialog(
             context: context,
