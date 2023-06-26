@@ -1,3 +1,4 @@
+//Este es el codigo del registro
 import 'package:flutter/material.dart';
 import './login_pages.dart';
 import './registro/Registro_datos.dart';
@@ -6,7 +7,7 @@ class RegistrarUsuario extends StatefulWidget {
   static String id = "RegistrarUsuario";
 
   @override
-  State<RegistrarUsuario> createState() => _RegistrarUsuarioState();
+  State<RegistrarUsuario> createState() => _RegistrarUsuarioState();  
 }
 
 class _RegistrarUsuarioState extends State<RegistrarUsuario> {

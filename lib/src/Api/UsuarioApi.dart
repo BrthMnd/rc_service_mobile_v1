@@ -8,7 +8,7 @@ Future UsuarioApi(Function(List<dynamic>) setStateCallback) async {
     try {
       final response = await http.get(url);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200) { 
         final data = response.body;
         // print(data);
         final res = jsonDecode(data);
