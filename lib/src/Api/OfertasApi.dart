@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future ofertaApi(Function(List<dynamic>) setStateCallback) async {
-  final url =
-      Uri.parse('https://api-flutter-proyectrcservice.onrender.com/oferta');
+  final url = Uri.parse('https://rcservice.onrender.com/api/ofertas/oferta');
 
   try {
     final response = await http.get(url);
@@ -23,17 +22,10 @@ Future ofertaApi(Function(List<dynamic>) setStateCallback) async {
   }
 }
 
-void actualizarOfertaEstado(int ofertaId, String nuevoEstado, oferta) async {
-  final url =
-      'https://api-flutter-proyectrcservice.onrender.com/oferta/$ofertaId'; 
-    final arquitectura = {
-      "id": ofertaId,
-      "servicios": oferta["servicios"], 
-      "descripcion": oferta["descripcion"], 
-      "inmueble": oferta["inmueble"], 
-      "OfertaEstado": "$nuevoEstado"
-    };
-    print(arquitectura);
+void actualizarOfertaEstado(String ofertaId, String nuevoEstado, oferta) async {
+  final url = "https://rcservice.onrender.com/api/ofertas/oferta/$ofertaId";
+  final arquitectura = {"id_status": nuevoEstado};
+  print(arquitectura);
   try {
     final response = await http.put(
       Uri.parse(url),

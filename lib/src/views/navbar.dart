@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Pages/Home.dart';
 import 'Pages/Estados.dart';
 import '../config/Configuracion.dart';
+
 /// Flutter code sample for [BottomNavigationBar].
 
 void main() => runApp(const BtnnNavigationApp());
@@ -20,12 +21,10 @@ class BtnnNavigation extends StatefulWidget {
   const BtnnNavigation({super.key});
 
   @override
-  State<BtnnNavigation> createState() =>
-      _BtnnNavigationState();
+  State<BtnnNavigation> createState() => _BtnnNavigationState();
 }
 
-class _BtnnNavigationState
-    extends State<BtnnNavigation> {
+class _BtnnNavigationState extends State<BtnnNavigation> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     paginaHome(),
@@ -69,5 +68,5 @@ Widget menuBar(selectedIndex, onItemTapped) {
     currentIndex: selectedIndex,
     selectedItemColor: const Color.fromARGB(255, 0, 173, 165),
     onTap: onItemTapped,
-);
+  );
 }

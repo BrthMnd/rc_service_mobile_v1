@@ -56,7 +56,7 @@ class _paginaHomeState extends State<paginaHome> {
                       itemCount: _ofertas.length,
                       itemBuilder: (BuildContext context, int index) {
                         final oferta = _ofertas[index];
-                        if (oferta["OfertaEstado"] == "Disponible") {
+                        if (oferta["id_status"]["name"] == "Activo") {
                           return Card(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
@@ -79,6 +79,7 @@ class _paginaHomeState extends State<paginaHome> {
 }
 
 Widget cartaContainer(dynamic oferta, context) {
+  var inmueble = oferta["id_property"];
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
@@ -87,21 +88,33 @@ Widget cartaContainer(dynamic oferta, context) {
         children: [
           // Inmueble
           Text("Inmueble:"),
-          Text(oferta["inmueble"].toString()),
+          Text(inmueble["direccion"].toString()),
           GestureDetector(
             onTap: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title:  Text(oferta["inmueble"].toString().toUpperCase()),
-          content: Text(oferta["descripcion"].toString()),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text(inmueble["tipoPropiedad"].toString().toUpperCase()),
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text("Direccion:"),
+                      Text(inmueble["direccion"].toString()),
+                      Text("Caracteristicas:"),
+                      Text(inmueble["metrosCuadrados"].toString() + " m2 "),
+                      Text(inmueble["nHabitaciones"].toString() +
+                          " Habitaciones"),
+                      Text(inmueble["nBanos"].toString() + " Habitaciones")
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
             child: Text(
               "Mas Info",
               style: TextStyle(
@@ -117,16 +130,16 @@ Widget cartaContainer(dynamic oferta, context) {
         children: [
           // Servicio
           Text("Servicio:"),
-          Text(oferta["servicios"].toString()),
-          Text("        "),
+          Text(oferta["id_service"]["Nombre_Servicio"].toString()),
+          Text("  "),
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text("Estado:"),
-          Text(oferta["OfertaEstado"].toString()),
-          btnContainer(oferta["id"], context, oferta),
+          Text(oferta["id_status"]["name"].toString()),
+          btnContainer(oferta["_id"], context, oferta),
         ],
       ),
     ],
@@ -134,9 +147,10 @@ Widget cartaContainer(dynamic oferta, context) {
 }
 
 Widget btnContainer(ofertaId, context, oferta) {
+  const EstadoParaAplicar = "650bcdd8802e33d589bd5b8b";
   return ElevatedButton(
       onPressed: () => {
-            actualizarOfertaEstado(ofertaId, "Aplicando", oferta),
+            actualizarOfertaEstado(ofertaId, EstadoParaAplicar, oferta),
             Navigator.pushReplacementNamed(context, BtnnNavigationApp.id)
           },
       child: Text("Aplicar"));
