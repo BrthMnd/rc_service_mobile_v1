@@ -5,16 +5,19 @@ export const theme = {
     primary: "#646174",
     white: "#fff",
   },
-  appbar: {
-    primary: "#24292e",
-    textPrimary: "grey",
+  navBar: {
+    primary: "purple",
+    secondary: "orange",
   },
   fontSizes: {
-    body: 14,
-    subHeading: 14,
+    Heading: 24,
+    SubHeading: 20,
+    paragraph: 14,
   },
-  fonts: {
-    main: "System",
+  fontsFamily: {
+    cursive: "cursive",
+    monospace: "monospace",
+    fangSong: "fangsong",
   },
   fontWeights: {
     normal: "400",
