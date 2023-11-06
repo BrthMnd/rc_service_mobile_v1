@@ -71,5 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingLeft: 5,
     paddingRight: 5,
+    marginTop: 20,
   },
 });
