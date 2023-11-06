@@ -7,7 +7,7 @@ export const theme = {
   },
   appbar: {
     primary: "#24292e",
-    textPrimary: "#fff",
+    textPrimary: "grey",
   },
   fontSizes: {
     body: 14,

@@ -1,4 +1,4 @@
-import { View } from "react-native-web";
+import { View } from "react-native";
 import StyledText from "../StyleText";
 
 const OffersStats = (props) => {

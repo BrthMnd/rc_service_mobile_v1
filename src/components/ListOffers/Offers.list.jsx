@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native-web";
+import { View, Text, FlatList } from "react-native";
 import OffersList from "../../data/offers.list.js";
 import { ItemsOffers } from "./Items.ofertas.jsx";
 // import
