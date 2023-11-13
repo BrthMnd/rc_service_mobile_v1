@@ -10,69 +10,72 @@ import { ActivityIndicator } from "react-native-paper";
 const Stack = createNativeStackNavigator();
 
 export const Main = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const VerifyToken = async () => {
-      try {
-        let cookie = await AsyncStorage.getItem("token");
-        let Cookie = {
-          token: cookie,
-        };
-        console.log(cookie);
-        if (cookie) {
-          const res = await ApiPost(URL_LOGIN_Verify, Cookie);
-          console.log("paso");
-          console.log(res);
-          res.status === 200 && setIsAuthenticate(true);
-        } else {
-          console.log("no paso");
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    VerifyToken();
-  }, []);
+  const [isAuthenticate, setIsAuthenticate] = useState(true);
+  const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   const VerifyToken = async () => {
+  //     try {
+  //       let cookie = await AsyncStorage.getItem("token");
+  //       let Cookie = {
+  //         token: cookie,
+  //       };
+  //       console.log(cookie);
+  //       if (cookie) {
+  //         const res = await ApiPost(URL_LOGIN_Verify, Cookie);
+  //         console.log("paso");
+  //         console.log(res);
+  //         if (res) {
+  //           setIsAuthenticate(true);
+  //         } else {
+  //           console.log("Authentication failed");
+  //         }
+  //       } else {
+  //         console.log("no paso");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   VerifyToken();
+  // }, []);
+  if (loading) {
+    return (
+      <ActivityIndicator
+        size="large"
+        color="blue"
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
+    );
+  }
   return (
     <>
-      {loading && (
-        <ActivityIndicator
-          size="large"
-          color="blue"
-          style={{
-            width: "100vw",
-            height: "100vh",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-      )}
-      {!loading && (
+      {!isAuthenticate ? (
         <Stack.Navigator>
-          {!isAuthenticate && !loading && (
-            <Stack.Screen
-              name="Home"
-              component={Navigation}
-              options={{
-                headerShown: false,
-              }}
-            />
-          )}
-
-          {isAuthenticate && !loading && (
-            <Stack.Screen
-              name="SignIn"
-              component={LogIn}
-              options={{
-                title: "Sign in",
-                headerShown: false,
-                animationTypeForReplace: true ? "pop" : "push",
-              }}
-            />
-          )}
+          <Stack.Screen
+            name="SignIn"
+            component={LogIn}
+            options={{
+              title: "Sign in",
+              headerShown: false,
+              animationTypeForReplace: true ? "pop" : "push",
+            }}
+          />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Navigation}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       )}
     </>

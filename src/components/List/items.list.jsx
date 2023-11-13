@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 export function ItemsList(props) {
@@ -8,29 +8,22 @@ export function ItemsList(props) {
   return (
     <Card style={styles.Card}>
       <Card.Content style={styles.Content}>
+        <Text variant="titleMedium" style={styles.Title}>
+          Servicio: {props.id_service.Nombre_Servicio}
+        </Text>
         <View style={styles.ContentGlobal}>
-          <View style={styles.Title}>
-            <Text variant="titleMedium">
-              Servicio: {props.id_service.Nombre_Servicio}
+          <Text variant="titleSmall" style={{ fontWeight: "bold" }}>
+            Descripción:
+          </Text>
+          <ScrollView style={styles.scroll}>
+            <Text variant="titleSmall" style={{ fontSize: 16 }}>
+              {props.description}
             </Text>
-          </View>
-          <View style={styles.description}>
-            <View style={styles.Item}>
-              <Text variant="titleSmall" style={{ fontWeight: "bold" }}>
-                Descripción:
-              </Text>
-              <Text variant="titleSmall">{props.description}</Text>
-            </View>
-            <View style={styles.Item}>
-              <Text variant="titleSmall">Estado:</Text>
-              <Text variant="titleSmall">{props.id_OfferStatus.name}</Text>
-            </View>
-            <TouchableOpacity onPress={() => console.log("On")}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>Mas Info</Text>
-            </TouchableOpacity>
-          </View>
+          </ScrollView>
         </View>
-
+        <TouchableOpacity onPress={() => console.log("On")}>
+          <Text style={{ fontSize: 12, fontWeight: "bold" }}>Mas Info</Text>
+        </TouchableOpacity>
         <Card.Actions style={{ padding: 0 }}>
           <Button onPress={() => console.log("ok")}>Aplicar</Button>
         </Card.Actions>
@@ -46,9 +39,23 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     alignItems: "center",
   },
+  scroll: {
+    width: "100%",
+    height: "50px",
+    textAlign: "center",
+  },
   Title: {
+    position: "absolute",
+
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
     justifyContent: "center",
     alignItems: "center",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    top: "0%",
+    fontWeight: "bold",
   },
   Item: {
     justifyContent: "center",
@@ -59,12 +66,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
+    width: "40%",
   },
   Content: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 5,
+    width: "100%",
   },
   Card: {
     backgroundColor: "#dbdbdb",
@@ -72,5 +81,6 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
     marginTop: 20,
+    position: "relative",
   },
 });
