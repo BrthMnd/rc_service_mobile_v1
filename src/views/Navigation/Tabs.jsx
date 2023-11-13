@@ -18,7 +18,6 @@ export function MyTabs() {
         name="Home"
         component={OffersPage}
         options={{
-          headerStyle: {},
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="home" size={size} color={color} />;
           },

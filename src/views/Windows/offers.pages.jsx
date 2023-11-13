@@ -7,12 +7,12 @@ import {
 } from "react-native";
 import { ApiGet } from "../../hooks/Api.hook";
 import { ItemsList } from "../../components/List/items.list";
-// import { Data } from "../../../data";
-const url = "https://rcservice.onrender.com/api/ofertas/oferta";
+import { URL_OFFERS } from "../../data/CONSTANT_DATA";
+const url = URL_OFFERS;
 
 export const OffersPage = () => {
+  console.log(url)
   const [data, loading, error] = ApiGet(url);
-
   return (
     <ScrollView>
       <View>
