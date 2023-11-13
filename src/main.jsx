@@ -6,40 +6,43 @@ import { ApiPost } from "./hooks/Api.hook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { URL_LOGIN_Verify } from "./data/CONSTANT_DATA";
 import { ActivityIndicator } from "react-native-paper";
-
+import { useDispatch } from "react-redux";
+import { AddUser } from "./features/user.slice";
 const Stack = createNativeStackNavigator();
 
 export const Main = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState(true);
-  const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   const VerifyToken = async () => {
-  //     try {
-  //       let cookie = await AsyncStorage.getItem("token");
-  //       let Cookie = {
-  //         token: cookie,
-  //       };
-  //       console.log(cookie);
-  //       if (cookie) {
-  //         const res = await ApiPost(URL_LOGIN_Verify, Cookie);
-  //         console.log("paso");
-  //         console.log(res);
-  //         if (res) {
-  //           setIsAuthenticate(true);
-  //         } else {
-  //           console.log("Authentication failed");
-  //         }
-  //       } else {
-  //         console.log("no paso");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   VerifyToken();
-  // }, []);
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const VerifyToken = async () => {
+      try {
+        let cookie = await AsyncStorage.getItem("token");
+        let Cookie = {
+          token: cookie,
+        };
+        console.log(cookie);
+        if (cookie) {
+          const res = await ApiPost(URL_LOGIN_Verify, Cookie);
+          console.log("paso");
+          console.log(res);
+          if (res) {
+            dispatch(AddUser(res));
+            setIsAuthenticate(true);
+          } else {
+            console.log("Authentication failed");
+          }
+        } else {
+          console.log("no paso");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    VerifyToken();
+  }, []);
   if (loading) {
     return (
       <ActivityIndicator
