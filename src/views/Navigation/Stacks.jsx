@@ -23,6 +23,7 @@ export function ConfigStacks() {
         }}
         name="Profile"
         component={ProfilePage}
+        
       />
     </Stack.Navigator>
   );
