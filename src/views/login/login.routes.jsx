@@ -1,5 +1,11 @@
 const { View, Button, TouchableOpacity } = require("react-native");
-const { Text, TextInput, Avatar } = require("react-native-paper");
+const {
+  Text,
+  TextInput,
+  Avatar,
+  Portal,
+  Dialog,
+} = require("react-native-paper");
 import { styles } from "./login.stylesheet";
 import Logo from "../../../assets/LogoRc.png";
 import { Formik, useField } from "formik";
@@ -7,7 +13,10 @@ import { SchemeLogin } from "../../helpers/Validation.form";
 import { ApiPost } from "../../hooks/Api.hook";
 import { URL_LOGIN } from "../../data/CONSTANT_DATA";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
 export function LogIn() {
+  const [visible, setVisible] = useState(false);
+  const [err, setErr] = useState(null);
   const InitialValuesLogin = {
     email: "",
     password: "",
@@ -29,9 +38,31 @@ export function LogIn() {
     );
   };
   const HandlePost = async (values) => {
-    const result = await ApiPost(URL_LOGIN, values);
-    await AsyncStorage.setItem("token", result.token);
-    console.log(result);
+    try {
+      const result = await ApiPost(URL_LOGIN, values);
+      console.log(result);
+
+      if (result.response && result.response.status == 400) {
+        setErr(result.response.data.response);
+        setVisible(true);
+        return;
+      } else if (result.response && result.response.status == 404) {
+        setErr(result.response.data);
+        setVisible(true);
+        return;
+      }
+      if (result.data && result.data.result.role == "Employed") {
+        setErr("Tu rol no puede ingresar por la aplicacion movil.");
+        setVisible(true);
+        return;
+      }
+
+      AsyncStorage.setItem("token", result.data.token);
+    } catch (error) {
+      console.log(error);
+      setErr("error indefinido");
+      setVisible(true);
+    }
   };
   return (
     <View style={styles.container}>
@@ -92,6 +123,15 @@ export function LogIn() {
           }}
         </Formik>
       </View>
+      <Portal>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+          <Dialog.Icon icon="alert" />
+          <Dialog.Title>☣</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{err}</Text>
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
     </View>
   );
 }

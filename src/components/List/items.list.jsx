@@ -2,9 +2,26 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { URL_APLIED_PROVIDER } from "../../data/CONSTANT_DATA";
+import { ApiPut } from "../../hooks/Api.hook";
 export function ItemsList(props) {
   console.log(props);
-
+  const user = useSelector((state) => state.user);
+  const Aplicar = async (id) => {
+    const url = `${URL_APLIED_PROVIDER}${encodeURIComponent(id)}`;
+    const data = {
+      id_ServiceProvider: user.id,
+    };
+    console.log("url->" + url);
+    console.log(data);
+    try {
+      const res = await ApiPut(url, data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card style={styles.Card}>
       <Card.Content style={styles.Content}>
@@ -25,7 +42,7 @@ export function ItemsList(props) {
           <Text style={{ fontSize: 12, fontWeight: "bold" }}>Mas Info</Text>
         </TouchableOpacity>
         <Card.Actions style={{ padding: 0 }}>
-          <Button onPress={() => console.log("ok")}>Aplicar</Button>
+          <Button onPress={() => Aplicar(props._id)}>Aplicar</Button>
         </Card.Actions>
       </Card.Content>
     </Card>
