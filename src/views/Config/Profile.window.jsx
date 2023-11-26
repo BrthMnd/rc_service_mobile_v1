@@ -1,26 +1,31 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+import { styles } from "./Estilos/Profile.style";
 export function ProfilePage() {
   const user = useSelector((state) => state.user);
   console.log(user);
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <Ionicons name="person-circle-sharp" size={150} color="black" />
-      <Text style={styles.title_name}>{user.name}</Text>
-      <View>
-        <Text>E-mail: {user.email}</Text>
-        <Text>Documento: {user.cc}</Text>
-        <Text>Telefono: {user.phone}</Text>
-        <Text>Direccion: {user.direction}</Text>
+    <View style={styles.container}>
+      <View style={styles.containerHead}>
+        <Ionicons style={styles.icono} name="person-circle-sharp" />
+        <Text style={styles.titulo}>{user.name}</Text>
+      </View>
+
+      <View style={styles.elementosContainer}>
+        <View>
+          <Text style={styles.items}>E-mail: {user.email}</Text>
+          <Text style={styles.items}>Documento: {user.cc}</Text>
+        </View>
+        <View>
+          <Text style={styles.items}>Telefono: {user.phone}</Text>
+          <Text style={styles.items}>Direccion: {user.direction}</Text>
+        </View>
+      </View>
+      <View style={styles.containerPie}>
+        <Text style={styles.botones}>Actualizar</Text>
+        <Text style={styles.botones}>Calificaciones</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title_name: { fontSize: "40px", fontFamily: "cursive" },
-  text: {
-    fontFamily: "",
-  },
-});
