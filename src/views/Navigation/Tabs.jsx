@@ -4,9 +4,24 @@ import { Ionicons } from "@expo/vector-icons";
 import { OffersPage } from "../Windows/offers.pages";
 import { OffersAppliedPage } from "../Windows/offersApplied.pages";
 import { ConfigStacks } from "./Stacks";
+import { ApiGet } from "../../hooks/Api.hook";
+import { URL_OFFERS } from "../../data/CONSTANT_DATA";
+import { useDispatch } from "react-redux";
+import { ChangeLoading, ChangeOffers } from "../../features/offers.slice";
+
 const Tab = createBottomTabNavigator();
 
 export function MyTabs() {
+  const dispatch = useDispatch();
+  const [data, loading, error] = ApiGet(URL_OFFERS);
+
+  if (error) {
+    dispatch(ChangeError);
+  } else if (data) {
+    dispatch(ChangeOffers(data));
+    dispatch(ChangeLoading(loading));
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -25,13 +40,13 @@ export function MyTabs() {
       />
       <Tab.Screen
         name="Applied"
+        component={OffersAppliedPage}
         options={{
           tabBarLabel: "Aplicado",
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="checkbox" size={size} color={color} />;
           },
         }}
-        component={OffersAppliedPage}
       />
       <Tab.Screen
         name="Config"

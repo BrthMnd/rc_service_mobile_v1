@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     backgroundColor: "grey",
-    height: "100vh",
+    height: "100%",
   },
   Avatar: {
     position: "absolute",
@@ -19,13 +19,14 @@ export const styles = StyleSheet.create({
     zIndex: 100,
   },
   card: {
-    width: "80vw",
-    height: "80vh",
+    width: "85%",
+    height: "80%",
     backgroundColor: "#ffffff",
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
     borderRadius: 20,
     position: "relative",
+
     shadowColor: "#000", // Color de la sombra
     shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
     shadowOpacity: 0.3, // Opacidad de la sombra
@@ -36,11 +37,9 @@ export const styles = StyleSheet.create({
     backgroundColor: "#3498db",
     padding: 15,
     borderRadius: 10,
-    marginTop: 10,
+    marginVertical: 10,
     width: "80%",
     alignSelf: "center",
-    position: "absolute",
-    bottom: "-40%",
   },
   buttonText: {
     color: "#fff",

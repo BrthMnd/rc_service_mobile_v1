@@ -6,6 +6,8 @@ const {
   Portal,
   Dialog,
 } = require("react-native-paper");
+import { useNavigation } from "@react-navigation/native";
+
 import { styles } from "./login.stylesheet";
 import Logo from "../../../assets/LogoRc.png";
 import { Formik, useField } from "formik";
@@ -15,6 +17,8 @@ import { URL_LOGIN } from "../../data/CONSTANT_DATA";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 export function LogIn() {
+  const navigation = useNavigation();
+
   const [visible, setVisible] = useState(false);
   const [err, setErr] = useState(null);
   const InitialValuesLogin = {
@@ -52,12 +56,13 @@ export function LogIn() {
         return;
       }
       if (result.data && result.data.result.role == "Employed") {
-        setErr("Tu rol no puede ingresar por la aplicacion movil.");
+        setErr("Tu rol no puede ingresar por la aplicación Movil.");
         setVisible(true);
         return;
       }
 
       AsyncStorage.setItem("token", result.data.token);
+      location.reload();
     } catch (error) {
       console.log(error);
       setErr("error indefinido");
@@ -71,22 +76,28 @@ export function LogIn() {
         <Formik
           initialValues={InitialValuesLogin}
           validationSchema={SchemeLogin}
-          style={{ justifyContent: "space-between", alignItems: "center" }}
+          style={{
+            alignItems: "center",
+            height: "100%",
+          }}
           onSubmit={(values) => HandlePost(values)}
         >
           {({ handleChange, handleSubmit, values }) => {
             return (
               <View
                 style={{
-                  justifyContent: "space-between",
+                  justifyContent: "space-around",
                   alignItems: "center",
-                  height: "50%",
+                  height: "100%",
                   paddingTop: 30,
+                  width: "100%",
                 }}
               >
+                <View style={{ height: "10%" }} id="space"></View>
                 <View
                   style={{
-                    justifyContent: "space-between",
+                    width: "100%",
+                    justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
@@ -95,6 +106,8 @@ export function LogIn() {
                     props={{ label: "Contraseña", secureTextEntry: true }}
                     name="password"
                   />
+                </View>
+                <View>
                   <TouchableOpacity
                     onPress={() => {
                       console.log("registrar");
@@ -110,14 +123,17 @@ export function LogIn() {
                     }}
                   >
                     <Text style={styles.linkText}>
-                      ¿Olvidades tu contraseña? Recuperala aquí
+                      Olvidaste tu contraseña? Recupérala aquí
                     </Text>
                   </TouchableOpacity>
-                </View>
 
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>Iniciar Sesión</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.buttonText}>Iniciar Sesión</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             );
           }}

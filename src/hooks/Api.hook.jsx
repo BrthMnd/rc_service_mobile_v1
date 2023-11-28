@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../libs/axios";
 
 export function ApiGet(url) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -10,10 +10,15 @@ export function ApiGet(url) {
     const Api = async () => {
       try {
         const res = await axios.get(url);
-        setData(res.data);
+        console.log("todo bien");
+        console.log(res);
+        setData(res);
       } catch (err) {
+        console.log("todo mal");
+        console.log(err);
         setError(err);
       } finally {
+        console.log("Termino de cargar...");
         setLoading(false);
       }
     };
