@@ -12,8 +12,8 @@ const Stack = createNativeStackNavigator();
 import { Platform } from "react-native";
 
 export const Main = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [Err, setErr] = useState(null);
   const [visible, setVisible] = useState(true);
 
@@ -64,7 +64,7 @@ export const Main = () => {
         setLoading(false);
       }
     };
-    // VerifyToken();
+    VerifyToken();
   }, []);
   if (loading) {
     return (
