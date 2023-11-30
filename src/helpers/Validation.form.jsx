@@ -9,5 +9,5 @@ export const SchemeLogin = yup.object().shape({
     .string()
     .min(2, "Contraseña muy corta")
     .max(30, "Contraseña demasiado larga")
-    .required("La constraseña es requerida."),
+    .required("La contraseña es requerida."),
 });

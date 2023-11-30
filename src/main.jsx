@@ -9,10 +9,11 @@ import { ActivityIndicator, Dialog, Portal, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { AddUser } from "./features/user.slice";
 const Stack = createNativeStackNavigator();
+import { Platform } from "react-native";
 
 export const Main = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isAuthenticate, setIsAuthenticate] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [Err, setErr] = useState(null);
   const [visible, setVisible] = useState(true);
 
@@ -32,8 +33,16 @@ export const Main = () => {
             console.log("paso");
             dispatch(AddUser(res.data));
             setIsAuthenticate(true);
+          } else if (
+            res.response &&
+            res.response.data.res.name == "TokenExpiredError"
+          ) {
+            console.log("error de token expire");
+            AsyncStorage.removeItem("token");
+            setErr("La session a expirado...");
+            setVisible(true);
           } else {
-            setErr("La Autenticacion falló");
+            setErr("La Autenticación falló");
             setVisible(true);
           }
         } else {
@@ -41,11 +50,21 @@ export const Main = () => {
         }
       } catch (error) {
         console.log(error);
+
+        if (
+          error.response &&
+          error.response.data.error.name == "TokenExpiredError"
+        ) {
+          AsyncStorage.removeItem("token");
+          console.log("error de token expire");
+          setErr("La Autenticacion falló");
+          setVisible(true);
+        }
       } finally {
         setLoading(false);
       }
     };
-    VerifyToken();
+    // VerifyToken();
   }, []);
   if (loading) {
     return (

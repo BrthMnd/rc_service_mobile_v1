@@ -8,11 +8,15 @@ import {
 import { ApiGet } from "../../hooks/Api.hook";
 import { ItemsList } from "../../components/List/items.list";
 import { URL_OFFERS } from "../../data/CONSTANT_DATA";
-const url = URL_OFFERS;
+import { useSelector } from "react-redux";
 
 export const OffersPage = () => {
-  console.log(url)
-  const [data, loading, error] = ApiGet(url);
+  const { offers, loading, error, candidate } = useSelector(
+    (state) => state.offer
+  );
+  console.log("los resultados son:");
+  console.log(offers);
+
   return (
     <ScrollView>
       <View>
@@ -20,7 +24,7 @@ export const OffersPage = () => {
         {error && <Text>error</Text>}
         {!loading && !error && (
           <FlatList
-            data={data}
+            data={offers}
             renderItem={({ item: offers }) => <ItemsList {...offers} />}
           />
         )}

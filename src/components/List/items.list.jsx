@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { URL_APLIED_PROVIDER } from "../../data/CONSTANT_DATA";
 import { ApiPut } from "../../hooks/Api.hook";
 export function ItemsList(props) {
+  console.log("Props");
   console.log(props);
   const user = useSelector((state) => state.user);
   const Aplicar = async (id) => {
