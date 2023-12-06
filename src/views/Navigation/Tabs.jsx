@@ -7,7 +7,7 @@ import { ConfigStacks } from "./Stacks";
 import { ApiGet } from "../../hooks/Api.hook";
 import { URL_OFFERS } from "../../data/CONSTANT_DATA";
 import { useDispatch } from "react-redux";
-import { ChangeLoading, ChangeOffers } from "../../features/offers.slice";
+import { ChangeError, ChangeLoading, ChangeOffers } from "../../features/offers.slice";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +16,7 @@ export function MyTabs() {
   const [data, loading, error] = ApiGet(URL_OFFERS);
 
   if (error) {
-    dispatch(ChangeError);
+    dispatch(ChangeError());
   } else if (data) {
     dispatch(ChangeOffers(data));
     dispatch(ChangeLoading(loading));

@@ -9,26 +9,7 @@ export const OffersAppliedPage = () => {
   const { offers, loading, error, candidates } = useSelector(
     (state) => state.offer
   );
-  const [filteredOffers, setFilteredOffers] = useState([]);
   const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (offers && candidates) {
-      const filteredOffers = offers.filter((offer) => {
-        return candidates.some((candidate) => {
-          return (
-            candidate.id_ServiceProvider &&
-            candidate.id_ServiceProvider.some(
-              (provider) => provider._id === user.id
-            )
-          );
-        });
-      });
-
-      setFilteredOffers(filteredOffers);
-    }
-  }, [offers, candidates, user]);
-
   return (
     <ScrollView>
       <View>
@@ -38,7 +19,21 @@ export const OffersAppliedPage = () => {
           <FlatList
             data={offers}
             renderItem={({ item: offers }) => {
-              return <ItemsList {...offers} />;
+              candidates.forEach((Father) => {
+                Father.id_ServiceProvider.forEach((child) => {
+                  console.log("Father id offers: " + Father.id_offers._id);
+                  console.log("table id : " + offers._id);
+                  console.log("child: " + child._id);
+                  console.log("User: " + user.id_provider);
+                  if (
+                    Father.id_offers._id == offers._id &&
+                    child._id == user.id_provider
+                  ) {
+                    console.log("se cumplio");
+                    return <ItemsList {...offers} />;
+                  }
+                });
+              });
             }}
           />
         )}
