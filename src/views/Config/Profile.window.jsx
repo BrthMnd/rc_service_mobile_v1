@@ -2,7 +2,10 @@ import { View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./Estilos/Profile.style";
+import { useNavigation } from "@react-navigation/native";
+
 export function ProfilePage() {
+  const Navigator = useNavigation();
   const user = useSelector((state) => state.user);
   console.log(user);
   return (
@@ -24,7 +27,7 @@ export function ProfilePage() {
       </View>
       <View style={styles.containerPie}>
         <Text style={styles.botones}>Actualizar</Text>
-        <Text style={styles.botones}>Calificaciones</Text>
+        <Text style={styles.botones} onPress={() => Navigator.navigate("Calificacion")}>Calificaciones</Text>
       </View>
     </View>
   );

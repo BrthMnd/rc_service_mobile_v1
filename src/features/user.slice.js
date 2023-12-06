@@ -17,6 +17,7 @@ const UserSlice = createSlice({
       state.name = action.payload.name;
       state.phone = action.payload.phone;
       state.cc = action.payload.cc;
+      state.score = action.payload.score;
     },
   },
 });
