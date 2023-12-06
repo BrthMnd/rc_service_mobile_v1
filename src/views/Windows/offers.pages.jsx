@@ -24,7 +24,7 @@ export const OffersPage = () => {
         {error && <Text>error</Text>}
         {!loading && !error && (
           <FlatList
-            data={offers}
+            data={offers.filter(items => items.state == 'Disponible')}
             renderItem={({ item: offers }) => <ItemsList {...offers} />}
           />
         )}
