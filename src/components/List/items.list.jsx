@@ -27,7 +27,7 @@ export function ItemsList(props) {
     <Card style={styles.Card}>
       <Card.Content style={styles.Content}>
         <Text variant="titleMedium" style={styles.Title}>
-          Servicio: {props.id_service.Nombre_Servicio}
+          Servicio: {props.id_Category_service.Nombre_Categoria}
         </Text>
         <View style={styles.ContentGlobal}>
           <Text variant="titleSmall" style={{ fontWeight: "bold" }}>
