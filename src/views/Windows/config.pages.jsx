@@ -20,7 +20,7 @@ export const ConfigPage = () => {
         >
           Perfil
         </Text>
-        <Text style={styles.botones} title="Ver calificaciones">
+        <Text style={styles.botones} title="Ver calificaciones" onPress={() => Navigator.navigate("Calificacion")}>
           Ver calificaciones
         </Text>
         <Text style={styles.botones} title="Cerrar Sesión" onPress={LogOut}>
