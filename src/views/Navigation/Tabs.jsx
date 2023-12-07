@@ -6,15 +6,19 @@ import { OffersAppliedPage } from "../Windows/offersApplied.pages";
 import { ConfigStacks } from "./Stacks";
 import { ApiGet } from "../../hooks/Api.hook";
 import { URL_OFFERS } from "../../data/CONSTANT_DATA";
-import { useDispatch } from "react-redux";
-import { ChangeError, ChangeLoading, ChangeOffers } from "../../features/offers.slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ChangeError,
+  ChangeLoading,
+  ChangeOffers,
+} from "../../features/offers.slice";
 
 const Tab = createBottomTabNavigator();
 
 export function MyTabs() {
   const dispatch = useDispatch();
   const [data, loading, error] = ApiGet(URL_OFFERS);
-
+  const reload = useSelector((state) => state.reload.reload);
   if (error) {
     dispatch(ChangeError());
   } else if (data) {
@@ -24,6 +28,7 @@ export function MyTabs() {
 
   return (
     <Tab.Navigator
+      key={reload}
       screenOptions={{
         tabBarActiveTintColor: "purple",
       }}

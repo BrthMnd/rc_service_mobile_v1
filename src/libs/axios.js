@@ -6,8 +6,9 @@ import { Platform } from "react-native";
 const instance = axios.create({
   baseURL:
     Platform.OS == "android"
-      ? "https://rcservice.onrender.com/api"
-      : "http://localhost:3000/api",
-  withCredentials: true,
+      ? "https://rcservice.onrender.com/api/"
+      : "http://localhost:3000/api/",
+  
 });
 export default instance;
+

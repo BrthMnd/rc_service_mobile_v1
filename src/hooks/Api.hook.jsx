@@ -38,8 +38,11 @@ export async function ApiPost(url, data) {
   }
 }
 export async function ApiPut(url, data) {
+  
   try {
-    const res = await axios.put(url, data);
+    console.log("🚀 ~ file: Api.hook.jsx:41 ~ ApiPut ~ url:", url)
+    const res = await axios.put(url,data);
+    console.log(res)
     return res;
   } catch (error) {
     console.log(error);

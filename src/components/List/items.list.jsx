@@ -1,29 +1,91 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
-import { URL_APLIED_PROVIDER } from "../../data/CONSTANT_DATA";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  URL_APLIED_PROVIDER,
+  URL_DESAPLIED_PROVIDER,
+} from "../../data/CONSTANT_DATA";
 import { ApiPut } from "../../hooks/Api.hook";
+import { useNavigation, useRoute } from "@react-navigation/native";
 export function ItemsList(props) {
-  console.log("Props");
-  console.log(props);
+
+  const navigation = useNavigation();
   const user = useSelector((state) => state.user);
-  const Aplicar = async (id) => {
-    const url = `${URL_APLIED_PROVIDER}${encodeURIComponent(id)}`;
+  const { candidates } = useSelector((state) => state.offer);
+  const location = useRoute();
+
+  console.log(location.name);
+  const AplicarDesaplicar = async (id) => {
+    const url =
+      location.name == "Home"
+      ? `${URL_APLIED_PROVIDER}${id}`
+      : `${URL_DESAPLIED_PROVIDER}${id}`;
+
+
     const data = {
-      id_ServiceProvider: user.id,
+      id_ServiceProvider: user.id_provider,
     };
-    console.log("url->" + url);
-    console.log(data);
     try {
       const res = await ApiPut(url, data);
-      console.log(res);
+      navigation.replace("Home");
+    
     } catch (error) {
       console.log(error);
     }
   };
-  return (
+
+  if (location.name == "Applied") {
+    const data = candidates.map((items) => {
+      return items.id_ServiceProvider.map((item) => {
+        if (items.id_offers._id == props._id && user.id_provider == item._id) {
+          return (
+            <CardView
+              location={location.name}
+              ChangeState={AplicarDesaplicar}
+              {...props}
+            />
+          );
+        }
+      });
+    });
+    return data;
+  }
+  if (location.name == "Home") {
+    const data = candidates.map((items) => {
+      console.log(
+        "🚀 ~ file: items.list.jsx:42 ~ data ~ items.id_ServiceProvider.length :",
+        items.id_ServiceProvider.length
+      );
+      if (items.id_ServiceProvider.length == 0) {
+        console.log("este esta vacio");
+        if (items.id_offers._id == props._id) {
+          return (
+            <CardView
+              location={location.name}
+              ChangeState={AplicarDesaplicar}
+              {...props}
+            />
+          );
+        }
+      }
+      return items.id_ServiceProvider.map((item) => {
+        if (items.id_offers._id == props._id && user.id_provider != item._id) {
+          return (
+            <CardView
+              location={location.name}
+              ChangeState={AplicarDesaplicar}
+              {...props}
+            />
+          );
+        }
+      });
+    });
+    return data;
+  }
+}
+function CardView(props) {
+  return (<>
     <Card style={styles.Card}>
       <Card.Content style={styles.Content}>
         <Text variant="titleMedium" style={styles.Title}>
@@ -43,13 +105,17 @@ export function ItemsList(props) {
           <Text style={{ fontSize: 12, fontWeight: "bold" }}>Mas Info</Text>
         </TouchableOpacity>
         <Card.Actions style={{ padding: 0 }}>
-          <Button onPress={() => Aplicar(props._id)}>Aplicar</Button>
+          <Button onPress={() => ChangeState(props._id)}>
+            {location == "Home" ? "Aplicar" : "Desaplicar"}
+          </Button>
         </Card.Actions>
       </Card.Content>
     </Card>
+    
+  </>
+
   );
 }
-
 const styles = StyleSheet.create({
   description: {
     flexDirection: "row",
