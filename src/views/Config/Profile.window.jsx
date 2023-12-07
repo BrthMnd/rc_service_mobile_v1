@@ -17,12 +17,12 @@ export function ProfilePage() {
 
       <View style={styles.elementosContainer}>
         <View>
-          <Text style={styles.items}>E-mail: {user.email}</Text>
+          <Text style={styles.items}>Correo: {user.email}</Text>
           <Text style={styles.items}>Documento: {user.cc}</Text>
         </View>
         <View>
-          <Text style={styles.items}>Telefono: {user.phone}</Text>
-          <Text style={styles.items}>Direccion: {user.direction}</Text>
+          <Text style={styles.items}>Teléfono: {user.phone}</Text>
+          <Text style={styles.items}>Dirección: {user.direction}</Text>
         </View>
       </View>
       <View style={styles.containerPie}>
