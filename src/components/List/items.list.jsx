@@ -65,10 +65,6 @@ export function ItemsList(props) {
   }
   if (location.name == "Home") {
     const data = candidates.map((items) => {
-      console.log(
-        "🚀 ~ file: items.list.jsx:42 ~ data ~ items.id_ServiceProvider.length :",
-        items.id_ServiceProvider.length
-      );
       if (items.id_ServiceProvider.length == 0) {
         console.log("este esta vacio");
         if (items.id_offers._id == props._id) {
@@ -112,7 +108,7 @@ function CardView(props) {
       <Card style={styles.Card}>
         <Card.Content style={styles.Content}>
           <Text variant="titleMedium" style={styles.Title}>
-            {props.id_Category_service.Nombre_Categoria}
+            {props.id_service.Nombre_Servicio}
           </Text>
           <View style={styles.ContentGlobal}>
             <Text variant="titleSmall" style={styles.description}>
@@ -163,7 +159,7 @@ function CardView(props) {
               <View style={stylesInfo.contenedorsito}>
                 <Text style={stylesInfo.cosa}>Servicio</Text>
                 <Text style={stylesInfo.servicio}>
-                  {props.id_Category_service.Nombre_Categoria}
+                  {props.id_service.Nombre_Servicio}
                 </Text>
               </View>
               <View style={stylesInfo.contenedorsito}>

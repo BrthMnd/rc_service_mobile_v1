@@ -14,6 +14,7 @@ const UserSlice = createSlice({
       state.id = action.payload.id;
       state.id_provider = action.payload.id_provider;
       state.email = action.payload.email;
+      state.direction = action.payload.direction;
       state.name = action.payload.name;
       state.phone = action.payload.phone;
       state.cc = action.payload.cc;
