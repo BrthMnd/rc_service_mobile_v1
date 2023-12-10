@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,9 @@ import {
 } from "../../data/CONSTANT_DATA";
 import { ApiPut } from "../../hooks/Api.hook";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { styles } from "./styles.offer";
+import { stylesInfo } from "./style.offer.info";
 export function ItemsList(props) {
   const navigation = useNavigation();
   console.log("Props");
@@ -36,9 +39,9 @@ export function ItemsList(props) {
     try {
       const res = await ApiPut(url, data);
       navigation.replace("Home");
-      return Alert.alert("Desaplicando...", "...",[
-        {text: "OK!", onPress: ()=> console.log('Hello')}
-      ])
+      return Alert.alert("Desaplicando...", "...", [
+        { text: "OK!", onPress: () => console.log("Hello") },
+      ]);
     } catch (error) {
       console.log(error);
     }
@@ -109,56 +112,69 @@ function CardView(props) {
       <Card style={styles.Card}>
         <Card.Content style={styles.Content}>
           <Text variant="titleMedium" style={styles.Title}>
-            Servicio: {props.id_Category_service.Nombre_Categoria}
+            {props.id_Category_service.Nombre_Categoria}
           </Text>
           <View style={styles.ContentGlobal}>
-            <Text variant="titleSmall" style={{ fontWeight: "bold" }}>
-              Descripción:
+            <Text variant="titleSmall" style={styles.description}>
+              Descripción
             </Text>
             <ScrollView style={styles.scroll}>
-              <Text variant="titleSmall" style={{ fontSize: 16 }}>
+              <Text variant="titleSmall" style={styles.descriptionText}>
                 {props.description}
               </Text>
             </ScrollView>
           </View>
           <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-            <Text style={{ fontSize: 12, fontWeight: "bold" }}>Mas Info</Text>
+            <MaterialIcons
+              style={styles.info}
+              name="info-outline"
+              size={40}
+              color="black"
+            />
           </TouchableOpacity>
-          <Card.Actions style={{ padding: 0 }}>
-            <Button onPress={() => ChangeState(props._id)}>
+          <Card.Actions style={styles.boton}>
+            <Text onPress={() => ChangeState(props._id)}>
               {location == "Home" ? "Aplicar" : "Desaplicar"}
-            </Button>
+            </Text>
           </Card.Actions>
 
           <Modal
             visible={isModalVisible}
-            style={styles.modal}
+            style={stylesInfo.modal}
             animationType="slide"
           >
-            <View style={styles.modalContent}>
-              <Text
-                variant="titleMedium"
-                style={{ fontSize: "20px", padding: "6px" }}
-              >
+            <View style={stylesInfo.modalContent}>
+              <Text variant="titleMedium" style={stylesInfo.titulo}>
                 Información de la oferta
               </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Dirección: {props.id_property.direccion}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Tipo de propiedad: {props.id_property.tipoPropiedad}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Servicio: {props.id_Category_service.Nombre_Categoria}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Descripción: {props.description}
-              </Text>
-              <Text style={styles.modalText}> Estado: {props.state}</Text>
+              <ScrollView style={stylesInfo.scroll}>
+              <View style={stylesInfo.contenedorsito}>
+                <Text style={stylesInfo.cosa}>Dirección</Text>
+                <Text style={stylesInfo.direction}>
+                  {props.id_property.direccion}
+                </Text>
+              </View>
+              <View style={stylesInfo.contenedorsito}>
+                <Text style={stylesInfo.cosa}>Tipo de Propiedad</Text>
+                <Text style={stylesInfo.tipoProperty}>
+                  {props.id_property.tipoPropiedad}
+                </Text>
+              </View>
+              <View style={stylesInfo.contenedorsito}>
+                <Text style={stylesInfo.cosa}>Servicio</Text>
+                <Text style={stylesInfo.servicio}>
+                  {props.id_Category_service.Nombre_Categoria}
+                </Text>
+              </View>
+              <View style={stylesInfo.contenedorsito}>
+                <Text style={stylesInfo.cosa}>Descripción</Text>
+                <Text style={stylesInfo.descripcion}>{props.description}</Text>
+              </View>
+              <View style={stylesInfo.contenedorsito}>
+                <Text style={stylesInfo.cosa}>Estado</Text>
+                <Text style={stylesInfo.estado}>{props.state}</Text>
+              </View>
+              </ScrollView>
               <Button
                 style={styles.modalButton}
                 title="Close"
@@ -174,80 +190,3 @@ function CardView(props) {
     </>
   );
 }
-const styles = StyleSheet.create({
-  description: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 10,
-    alignItems: "center",
-  },
-  scroll: {
-    width: "100%",
-    height: "50px",
-    textAlign: "center",
-  },
-  Title: {
-    position: "absolute",
-
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    top: "0%",
-    fontWeight: "bold",
-  },
-  Item: {
-    justifyContent: "center",
-    alignItems: "center",
-    
-    paddingHorizontal: 5,
-  },
-  ContentGlobal: {
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
-    width: "40%",
-  },
-  Content: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 5,
-    width: "100%",
-  },
-  Card: {
-    backgroundColor: "#dbdbdb",
-    justifyContent: "space-around",
-    paddingLeft: 5,
-    paddingRight: 5,
-    marginTop: 20,
-    position: "relative",
-  },
-  modal: {
-    flex: 1,
-
-    backgroundColor: "#000000b9",
-  },
-  modalContent: {
-    backgroundColor: "#e2e2e2",
-    padding: 40,
-    width: "80%",
-    borderRadius: 10,
-    elevation: 5,
-    alignItems: "center",
-    top: "50%",
-    left: "50%",
-    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-  },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: "black",
-  },
-  modalButton: {
-    marginTop: 10,
-  },
-});
