@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,9 +36,9 @@ export function ItemsList(props) {
     try {
       const res = await ApiPut(url, data);
       navigation.replace("Home");
-      return Alert.alert("Desaplicando...", "...",[
-        {text: "OK!", onPress: ()=> console.log('Hello')}
-      ])
+      return Alert.alert("Desaplicando...", "...", [
+        { text: "OK!", onPress: () => console.log("Hello") },
+      ]);
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +106,7 @@ function CardView(props) {
   const { ChangeState, location } = props;
   return (
     <>
-      <Card style={styles.Card}>
+      <Card style={styles.Card} key={props._id}>
         <Card.Content style={styles.Content}>
           <Text variant="titleMedium" style={styles.Title}>
             Servicio: {props.id_Category_service.Nombre_Categoria}
@@ -129,46 +129,6 @@ function CardView(props) {
               {location == "Home" ? "Aplicar" : "Desaplicar"}
             </Button>
           </Card.Actions>
-
-          <Modal
-            visible={isModalVisible}
-            style={styles.modal}
-            animationType="slide"
-          >
-            <View style={styles.modalContent}>
-              <Text
-                variant="titleMedium"
-                style={{ fontSize: "20px", padding: "6px" }}
-              >
-                Información de la oferta
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Dirección: {props.id_property.direccion}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Tipo de propiedad: {props.id_property.tipoPropiedad}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Servicio: {props.id_Category_service.Nombre_Categoria}
-              </Text>
-              <Text style={styles.modalText}>
-                {" "}
-                Descripción: {props.description}
-              </Text>
-              <Text style={styles.modalText}> Estado: {props.state}</Text>
-              <Button
-                style={styles.modalButton}
-                title="Close"
-                color="midnightblue"
-                onPress={() => setIsModalVisible(false)}
-              >
-                Cerrar
-              </Button>
-            </View>
-          </Modal>
         </Card.Content>
       </Card>
     </>
@@ -191,7 +151,7 @@ const styles = StyleSheet.create({
 
     left: "50%",
     top: "50%",
-    transform: "translate(-50%, -50%)",
+
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -202,7 +162,7 @@ const styles = StyleSheet.create({
   Item: {
     justifyContent: "center",
     alignItems: "center",
-    
+
     paddingHorizontal: 5,
   },
   ContentGlobal: {

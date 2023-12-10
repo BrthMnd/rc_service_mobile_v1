@@ -1,8 +1,8 @@
-import { View, Text, FlatList, ScrollView } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { ItemsList } from "../../components/List/items.list";
 import { useSelector } from "react-redux";
-import {} from "@react-navigation/native";
+import { ScrollView } from "react-native-virtualized-view";
 export const OffersAppliedPage = () => {
   const { offers, loading, error, candidates } = useSelector(
     (state) => state.offer

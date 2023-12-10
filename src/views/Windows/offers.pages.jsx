@@ -1,20 +1,11 @@
-import {
-  Text,
-  View,
-  FlatList,
-  ActivityIndicator,
-ScrollView,
-} from "react-native";
+import { Text, View, FlatList, ActivityIndicator } from "react-native";
 import { ItemsList } from "../../components/List/items.list";
 import { useSelector } from "react-redux";
-
+import { ScrollView } from "react-native-virtualized-view";
 export const OffersPage = () => {
   const { offers, loading, error, candidates } = useSelector(
     (state) => state.offer
-    );
-    console.log("🚀 ~ file: offers.pages.jsx:13 ~ OffersPage ~ candidate:", candidates)
-  console.log("los resultados son:");
-  console.log(offers);
+  );
 
   return (
     <ScrollView>
@@ -23,10 +14,9 @@ export const OffersPage = () => {
         {error && <Text>error</Text>}
         {!loading && !error && (
           <FlatList
-            data={offers.filter(items => items.state == 'Disponible')}
+            data={offers.filter((items) => items.state == "Disponible")}
             renderItem={({ item: offers }) => {
-              console.log("🚀 ~ file: offers.pages.jsx:27 ~ OffersPage ~ offers:", offers)
-              return(<ItemsList {...offers} />)
+              return <ItemsList {...offers} />;
             }}
           />
         )}
