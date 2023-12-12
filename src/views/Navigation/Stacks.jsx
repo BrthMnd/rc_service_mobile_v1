@@ -15,7 +15,7 @@ export function ConfigStacks() {
         options={{
           gestureEnabled: true,
         }}
-        name="HomeScreen"
+        name="Configuracion"
         component={ConfigPage}
       />
       <Stack.Screen

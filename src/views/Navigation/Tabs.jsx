@@ -44,7 +44,7 @@ export function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Applied"
+        name="Aplicando"
         component={OffersAppliedPage}
         options={{
           tabBarLabel: "Aplicado",

@@ -100,6 +100,7 @@ export function LogIn() {
                 }}
               >
                 <View style={{ height: "10%" }} id="space"></View>
+                <Text style={{ fontSize: "40px" }}>Inicio Sesión</Text>
                 <View
                   style={{
                     width: "100%",
