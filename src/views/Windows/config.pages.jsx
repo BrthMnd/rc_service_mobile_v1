@@ -3,11 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./Estilos/config.style";
 export const ConfigPage = () => {
-  const Navigator = useNavigation();
+  const navigation = useNavigation();
   const LogOut = async () => {
     AsyncStorage.removeItem("token");
     console.log("☣ Token Eliminated");
-    location.reload();
+    navigation.navigate("SignIn");
   };
   return (
     <View style={styles.container}>
@@ -16,11 +16,15 @@ export const ConfigPage = () => {
         <Text
           style={styles.botones}
           title="Ver Perfil"
-          onPress={() => Navigator.navigate("Profile")}
+          onPress={() => navigation.navigate("Profile")}
         >
           Perfil
         </Text>
-        <Text style={styles.botones} title="Ver calificaciones" onPress={() => Navigator.navigate("Calificacion")}>
+        <Text
+          style={styles.botones}
+          title="Ver calificaciones"
+          onPress={() => navigation.navigate("Calificacion")}
+        >
           Ver calificaciones
         </Text>
         <Text style={styles.botones} title="Cerrar Sesión" onPress={LogOut}>

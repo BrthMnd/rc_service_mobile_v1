@@ -105,7 +105,7 @@ function CardView(props) {
   const { ChangeState, location } = props;
   return (
     <>
-      <Card style={styles.Card}>
+      <Card style={styles.Card} key={props._id}>
         <Card.Content style={styles.Content}>
           <Text variant="titleMedium" style={styles.Title}>
             {props.id_service.Nombre_Servicio}
@@ -144,32 +144,34 @@ function CardView(props) {
                 Información de la oferta
               </Text>
               <ScrollView style={stylesInfo.scroll}>
-              <View style={stylesInfo.contenedorsito}>
-                <Text style={stylesInfo.cosa}>Dirección</Text>
-                <Text style={stylesInfo.direction}>
-                  {props.id_property.direccion}
-                </Text>
-              </View>
-              <View style={stylesInfo.contenedorsito}>
-                <Text style={stylesInfo.cosa}>Tipo de Propiedad</Text>
-                <Text style={stylesInfo.tipoProperty}>
-                  {props.id_property.tipoPropiedad}
-                </Text>
-              </View>
-              <View style={stylesInfo.contenedorsito}>
-                <Text style={stylesInfo.cosa}>Servicio</Text>
-                <Text style={stylesInfo.servicio}>
-                  {props.id_service.Nombre_Servicio}
-                </Text>
-              </View>
-              <View style={stylesInfo.contenedorsito}>
-                <Text style={stylesInfo.cosa}>Descripción</Text>
-                <Text style={stylesInfo.descripcion}>{props.description}</Text>
-              </View>
-              <View style={stylesInfo.contenedorsito}>
-                <Text style={stylesInfo.cosa}>Estado</Text>
-                <Text style={stylesInfo.estado}>{props.state}</Text>
-              </View>
+                <View style={stylesInfo.contenedorsito}>
+                  <Text style={stylesInfo.cosa}>Dirección</Text>
+                  <Text style={stylesInfo.direction}>
+                    {props.id_property.direccion}
+                  </Text>
+                </View>
+                <View style={stylesInfo.contenedorsito}>
+                  <Text style={stylesInfo.cosa}>Tipo de Propiedad</Text>
+                  <Text style={stylesInfo.tipoProperty}>
+                    {props.id_property.tipoPropiedad}
+                  </Text>
+                </View>
+                <View style={stylesInfo.contenedorsito}>
+                  <Text style={stylesInfo.cosa}>Servicio</Text>
+                  <Text style={stylesInfo.servicio}>
+                    {props.id_Category_service.Nombre_Categoria}
+                  </Text>
+                </View>
+                <View style={stylesInfo.contenedorsito}>
+                  <Text style={stylesInfo.cosa}>Descripción</Text>
+                  <Text style={stylesInfo.descripcion}>
+                    {props.description}
+                  </Text>
+                </View>
+                <View style={stylesInfo.contenedorsito}>
+                  <Text style={stylesInfo.cosa}>Estado</Text>
+                  <Text style={stylesInfo.estado}>{props.state}</Text>
+                </View>
               </ScrollView>
               <Button
                 style={styles.modalButton}

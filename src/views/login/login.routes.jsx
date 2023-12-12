@@ -16,6 +16,7 @@ import { ApiPost } from "../../hooks/Api.hook";
 import { URL_LOGIN } from "../../data/CONSTANT_DATA";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
+import { ModalComponent } from "../../components/modal/modal.component";
 export function LogIn() {
   const navigation = useNavigation();
 
@@ -43,6 +44,7 @@ export function LogIn() {
   };
   const HandlePost = async (values) => {
     try {
+      const isValid = await SchemeLogin.validate(values);
       const result = await ApiPost(URL_LOGIN, values);
       console.log(result);
 
@@ -62,8 +64,13 @@ export function LogIn() {
       }
 
       AsyncStorage.setItem("token", result.data.token);
-      location.reload();
+      navigation.replace("Home");
     } catch (error) {
+      if (error.errors) {
+        setErr(error.errors);
+        setVisible(true);
+        return;
+      }
       console.log(error);
       setErr("error indefinido");
       setVisible(true);
@@ -75,7 +82,6 @@ export function LogIn() {
         <Avatar.Image size={150} style={styles.Avatar} source={Logo} />
         <Formik
           initialValues={InitialValuesLogin}
-          validationSchema={SchemeLogin}
           style={{
             alignItems: "center",
             height: "100%",
@@ -139,15 +145,12 @@ export function LogIn() {
           }}
         </Formik>
       </View>
-      <Portal>
-        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title>☣</Dialog.Title>
-          <Dialog.Content>
-            <Text variant="bodyMedium">{err}</Text>
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+      <ModalComponent
+        visible={visible}
+        setVisible={setVisible}
+        content={err}
+        title={"Error al ingresar"}
+      />
     </View>
   );
 }
