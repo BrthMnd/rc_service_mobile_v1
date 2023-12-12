@@ -159,7 +159,7 @@ function CardView(props) {
                 <View style={stylesInfo.contenedorsito}>
                   <Text style={stylesInfo.cosa}>Servicio</Text>
                   <Text style={stylesInfo.servicio}>
-                    {props.id_Category_service.Nombre_Categoria}
+                    {props.id_service.Nombre_Servicio}
                   </Text>
                 </View>
                 <View style={stylesInfo.contenedorsito}>
